@@ -8,8 +8,13 @@
         */
         private $id;
         private $intitule;
-
-
+        private $reponses = [];
+        /* 
+         * Constructeur
+        */
+        public function __construct(){
+                $this->reponses = [];
+        }
 
         /**
          * Get the value of id
@@ -50,5 +55,27 @@
 
                 return $this;
         }
+
+        public function addReponse($reponse){
+                array_push($this->reponses, $reponse);
+        }
+        /**
+         * Get the value of reponses
+         */ 
+        public function getReponses()
+        {
+                return $this->reponses;
+        }
+
+        /**
+         * Set the value of reponses
+         *
+         * @return  self
+         */ 
+        public function setReponses($reponses)
+        {
+                $this->reponses = $reponses;
+
+                return $this;
+        }
     }
-?>

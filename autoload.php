@@ -13,5 +13,3 @@ class Autoloader{
         require 'src/'.$className.'.php';
     }
 }
-
-?>

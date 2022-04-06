@@ -10,12 +10,11 @@
           <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Question</a>
+          <a class="nav-link" href="<?php echo ROOT_DIR . '/admin/question'; ?>">Question</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Reponse</a>
+          <a class="nav-link" href="<?php echo ROOT_DIR . '/admin/reponse'; ?>">Reponse</a>
         </li>
-       
       </ul>
     </div>
   </div>
