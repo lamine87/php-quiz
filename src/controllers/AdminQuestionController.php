@@ -42,5 +42,27 @@
                     public function remove(int $id){
                         return $this->connexion->connexion->query('DELETE FROM question WHERE que_id='.$id);
                     }
+
+                     /* 
+
+                     */
+                    public function add($post){
+                        $intitule = htmlentities(htmlspecialchars(ucfirst($post["intitule"])));
+                        $sql = 'INSERT INTO question (que_intitule) VALUES ("'.$intitule.'")';
+                        $this->connexion->connexion->query($sql);
+                        // Récuperation de l'id 
+                        $id = $this->connexion->connexion->insert_id;
+
+                        $i = 0;
+                        // Prise en charge des reponses
+                        foreach($post["reponses"] as $reponse){
+                            $texte = htmlentities(htmlspecialchars(ucfirst($reponse)));
+                            $result = (is_null($post["results"][$i])) ? 0 : 1;
+                            $sql = 'INSERT INTO reponse (rep_texte, rep_question_id, rep_istrue) VALUES ("'.$texte.'",'.$id.', '.$result.')';
+                        }
+                    
+                    }
         }
+
+       
 ?>
