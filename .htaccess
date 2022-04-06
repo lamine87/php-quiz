@@ -1,0 +1,10 @@
+# Démarrage du moteur de réecriture d'url
+RewriteEngine On
+
+# 
+RewriteBase /php-quiz
+# Execeution des dossiers et des fichier existant
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+# Réecriture 
+RewriteRule ^(.+)$ index.php [QSA,L]
