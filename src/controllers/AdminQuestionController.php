@@ -44,7 +44,55 @@ class AdminQuestionController
     /**
      * Méthodes qui renvoie une question et ses réponses
      */
+
+     private function conformDataText($texte){
+        return htmlentities(htmlspecialchars(ucfirst($texte)));
+     }
+
+    public function update($id, $post, $question){
+
+        $reponsesActuelles = [];
+        foreach ($question->getReponses() as $reponse){
+            $rID = $reponse->getId();
+            array_push($reponsesActuelles, $rID);
+         }
+
+        // Mise à jour de l'intitule de la question 
+        $intitule = $this->conformDataText($post["intitule"]);
+        $sql = 'UPDATE question SET que_intitule ="'.$intitule.'"WHERE que_id='.$id;
+        $this->connexion->connexion->query($sql);
+        foreach ($post["reponses"] as $key=>$value){
+            $intitule = $this->conformDataText($value);
+            $isTrue = (!isset($post["results"][$key])) ? 0 : 1;
+            if(in_array($key, $reponsesActuelles)){
+                $sql = 'UPDATE reponse SET rep_texte="'.$intitule.'", rep_istrue='.$isTrue.' WHERE rep_id='.$key;
+                
+                // Supprimer la clé du tableau ($reponsesActuelles)
+                array_splice($reponsesActuelles, array_keys($reponsesActuelles, $key)[0], 1);
+            }else{
+                $sql = 'INSERT INTO reponse (rep_texte,rep_istrue, rep_question_id) VALUES ("'.$intitule.'",'.$isTrue.','.$id.')';
+            //echo $key."<br>";
+        }
+
+        $this->connexion->connexion->query($sql);
+     
+      }
+
+     // print_r($reponsesActuelles);
+     die();
+
+        // Si lr count de $reponsesActuelles > 0 avec une boucle on supprime les reponses correspondantes
+        if(count($reponsesActuelles)>0){
+        foreach ($reponsesActuelles as $id){
+            $sql = "DELETE FROM reponse WHERE rep_id=".$id;
+            $this->connexion->connexion->query($sql);
+        }
+        }
+      return true;
+
+    }
     public function find($id)
+
     {
         $sql = 'SELECT * FROM `question` AS q JOIN reponse AS r ON r.rep_question_id=q.que_id WHERE q.que_id=' . $id . ' ORDER BY r.rep_id ASC';
         //echo $sql;
@@ -86,7 +134,7 @@ class AdminQuestionController
     {
         // print_r($post);
         // die();
-        $intitule = htmlentities(htmlspecialchars(ucfirst($post["intitule"])));
+        $intitule = $this->conformDataText($post["intitule"]);
         $sql = 'INSERT INTO question (que_intitule) VALUES ("' . $intitule . '")';
         $this->connexion->connexion->query($sql);
         // Récuperation de l'id 

@@ -23,7 +23,7 @@ session_start();
         <?php
 
         if (isset($_SESSION['message'])) {
-            echo '<div class="alert alert-' . $_SESSION['message'][0] . '">' . $_SESSION['message']["1"] . '</div>';
+            echo '<div class="alert alert-' .$_SESSION['message'][0]. '">' .$_SESSION['message']["1"]. '</div>';
             unset($_SESSION['message']);
         }
         ?>
@@ -44,9 +44,9 @@ session_start();
                             // Tout est bon, message et redirection
                             $_SESSION['message'] = ["success", "Question supprimée!"];
                         } else {
-                            $_SESSION['message'] = ["danger", "Un probleme est survenu."];
+                            $_SESSION['message'] = ["danger", "Un probleme est survenu"];
                         }
-                        header('Location:' . ROOT_DIR . '/admin/question');
+                        header('Location:'.ROOT_DIR.'/admin/question');
                     }
                     if ($toAdmin[3] == "new") {
 
@@ -59,20 +59,25 @@ session_start();
                             } else {
                                 $_SESSION["message"] = ["danger", "Une erreur s'est produite"];
                             }
-                            header('Location:' . ROOT_DIR . '/admin/question');
+                            header('Location:'.ROOT_DIR.'/admin/question');
                         }
                         // Si non on affiche le formulaire d'ajout
 
-                        require(__DIR__ . '/question/new.php');
+                        require(__DIR__.'/question/new.php');
                     }
 
                     if ($toAdmin[3] == "edit") {
                         $question = $controller->find($toAdmin[4]);
-                        require(__DIR__ . '/question/edit.php');
+                        if(!empty($_POST)) {
+                            $controller->update($toAdmin[4], $_POST, $question);
+                            $question = $controller->find($toAdmin[4]);
+                        }
+                      
+                        require(__DIR__.'/question/edit.php');
                     }
                 } else {
                     $questions = $controller->findAll();
-                    require(__DIR__ . '/question/index.php');
+                    require(__DIR__.'/question/index.php');
                 }
             }
         }
