@@ -2,7 +2,7 @@
 <form action="" method="post" enctype="multipart/form">
     <div class="form-group">
        <label for="intitule">Intitulé</label>
-       <input type="text" name="intitule "id="intitule" class="form-control" placeholder="Intitulé">
+       <input type="text" name="intitule" id="intitule" class="form-control" placeholder="Intitulé">
     </div>
     <div class="mt-2">
         <button type="button" class="btn btn-dark btn-sm" id="bt-add-reponse">Ajouter une réponse</button>

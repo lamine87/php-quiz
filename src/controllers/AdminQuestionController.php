@@ -47,20 +47,25 @@
 
                      */
                     public function add($post){
+                        // print_r($post);
+                        // die();
                         $intitule = htmlentities(htmlspecialchars(ucfirst($post["intitule"])));
                         $sql = 'INSERT INTO question (que_intitule) VALUES ("'.$intitule.'")';
                         $this->connexion->connexion->query($sql);
                         // Récuperation de l'id 
                         $id = $this->connexion->connexion->insert_id;
-
-                        $i = 0;
+                        
                         // Prise en charge des reponses
+                        $i = 0;
+                      
                         foreach($post["reponses"] as $reponse){
                             $texte = htmlentities(htmlspecialchars(ucfirst($reponse)));
-                            $result = (is_null($post["results"][$i])) ? 0 : 1;
+                            $result = (!isset($post["results"][$i])) ? 0 : 1;
                             $sql = 'INSERT INTO reponse (rep_texte, rep_question_id, rep_istrue) VALUES ("'.$texte.'",'.$id.', '.$result.')';
+                            $this->connexion->connexion->query($sql);
+                            $i++;
                         }
-                    
+                        return true;
                     }
         }
 

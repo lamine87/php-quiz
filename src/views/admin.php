@@ -52,8 +52,13 @@
                         // On verifie s'il existe des données postées dans la requête
                         if(!empty($_POST)){
                             // Ajout des la question en BDD
-                            print_r($_POST);
-                            $controller->add($_POST);
+                            //print_r($_POST);
+                           if($controller->add($_POST)){
+                               $_SESSION["message"]=["success","Votre question à bien été ajouté"];
+                           }else{
+                            $_SESSION["message"]=["danger","Une erreur s'est produite"];
+                           }
+                           header('Location:'.ROOT_DIR.'/admin/question');
                         }
                         // Si non on affiche le formulaire d'ajout
 
