@@ -117,7 +117,6 @@ class AdminQuestionController
         return $question;
     }
 
-
     // Methode qui supprime une question
     // @param $id int l'id de la question à supprimer
 
